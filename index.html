@@ -18,6 +18,11 @@
       --radius: 18px;
     }
 
+    /* 改善案4: スムーススクロールの追加 */
+    html {
+      scroll-behavior: smooth;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -83,26 +88,37 @@
 
     .nav-links a {
       color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+    
+    .nav-links a:hover {
+      color: var(--text-main);
     }
 
     /* ===== Hero ===== */
     .hero {
-      padding: 70px 0 60px;
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      background-image: 
+        linear-gradient(rgba(10, 12, 16, 0.5), rgba(10, 12, 16, 0.95)), 
+        url('hero-bg.png');
+      background-size: cover;
+      background-position: center;
     }
 
     .hero-grid {
-      /* 2列分割をやめて、中央寄せのFlexboxに変更 */
       display: flex;
-      justify-content: center; 
+      justify-content: center;
+      width: 100%;
     }
 
     .hero-card {
       width: 100%;
-      max-width: 800px; /* PCで横に伸びすぎないように最大幅を設定 */
-      padding: 40px; /* 少し余白を広げてリッチに調整 */
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(22,27,34,0.9), rgba(17,21,27,0.95));
-      border: 1px solid var(--border-color);
+      max-width: 800px;
+      background: transparent;
+      border: none;
+      text-align: center;
     }
 
     h1 {
@@ -114,13 +130,20 @@
     .muted { color: var(--text-muted); }
 
     /* ===== Buttons ===== */
-    .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .btns { 
+      display: flex; 
+      gap: 12px; 
+      flex-wrap: wrap; 
+      margin-top: 20px; 
+      justify-content: center;
+    }
 
     .btn {
       padding: 12px 20px;
       border-radius: 999px;
       font-weight: 700;
       border: 1px solid transparent;
+      transition: all 0.2s ease;
     }
 
     .primary {
@@ -128,18 +151,40 @@
       color: #fff;
     }
 
+    .primary:hover {
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
+
     .secondary {
       border: 1px solid var(--border-color);
     }
 
-    /* ===== Sections ===== */
-    section { padding: 34px 0; }
+    .secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--text-muted);
+    }
 
-    .title {
-      font-size: 1.8rem;
-      margin-bottom: 14px;
+    /* ===== Sections ===== */
+    section { padding: 50px 0; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-subtitle { 
+      color: var(--accent-blue); 
+      font-size: 0.9rem; 
+      font-weight: bold; 
+      letter-spacing: 2px; 
+      margin-bottom: 4px; 
       text-transform: uppercase;
-      letter-spacing: 1px;
+    }
+
+    .section-title { 
+      font-size: 2rem; 
+      font-weight: bold; 
     }
 
     .grid-3 {
@@ -148,16 +193,63 @@
       gap: 16px;
     }
 
+    /* 改善案2: メンバーなどを中央に寄せるためのレイアウトクラス */
+    .flex-center {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* ===== Cards ===== */
     .card {
       background: rgba(22,27,34,0.9);
       border: 1px solid var(--border-color);
+      border-left: 4px solid var(--border-color);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 24px 20px;
+      transition: all 0.3s ease;
     }
-    
+
+    .card:hover {
+      border-color: var(--accent-blue);
+      border-left-color: var(--accent-cyan);
+      box-shadow: 0 0 20px rgba(47, 129, 247, 0.3);
+      transform: translateY(-4px);
+    }
+
     .card h3 {
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    /* ===== Concept & Sponsor Section ===== */
+    .concept-card { text-align: center; }
+    
+    .concept-card h3 { 
+      color: var(--accent-blue); 
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+
+    .sponsor-desc {
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 40px;
+      color: var(--text-main);
+      font-weight: bold;
+    }
+
+    /* 改善案1: リストを左揃えにして縦のラインをピシッと揃える */
+    .sponsor-list {
+      list-style: none;
+      padding: 0;
+      color: var(--text-muted);
+      line-height: 2;
+      font-size: 0.95rem;
+      display: inline-block; /* 追加: ブロックとして扱い中央に置くため */
+      text-align: left;      /* 追加: 中の文字は左揃え */
     }
 
     /* ===== Member ===== */
@@ -165,14 +257,39 @@
       display: flex;
       gap: 12px;
       align-items: center;
+      position: relative;
+      width: 100%;
+      max-width: 350px; /* カードが広がりすぎないように制限 */
     }
 
-    /* アイコン画像を丸く表示するためのスタイル */
+    .member::after {
+      content: "→";
+      position: absolute;
+      right: 20px;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .member:hover::after {
+      color: var(--accent-cyan);
+      transform: translateX(4px);
+    }
+
     .avatar-img {
       width: 50px;
       height: 50px;
       border-radius: 14px;
       object-fit: cover;
+    }
+
+    /* ===== Footer (改善案3: フッター) ===== */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 30px 0;
+      margin-top: 40px;
+      text-align: center;
     }
 
     /* ===== Mobile ===== */
@@ -181,7 +298,6 @@
       .grid-3 {
         grid-template-columns: 1fr;
       }
-
       h1 { font-size: 2.2rem; }
     }
   </style>
@@ -191,16 +307,16 @@
 
 <header>
   <div class="container nav">
-    
     <div class="logo">
       <img src="logo.png" alt="MICOロゴ">
       <span>MICO e-Sports</span>
     </div>
 
     <nav class="nav-links">
-      <a href="#about">ABOUT</a>
+      <a href="#concept">CONCEPT</a>
       <a href="#divisions">部門</a>
       <a href="#members">MEMBER</a>
+      <a href="#sponsor">SPONSOR</a>
       <a href="#contact">CONTACT</a>
     </nav>
   </div>
@@ -211,41 +327,41 @@
   <!-- HERO -->
   <section class="hero">
     <div class="container hero-grid">
-
       <div class="hero-card">
-        <small class="muted">Official Website</small>
         <h1>勝つ、その先へ。</h1>
         <p class="muted">
-          MICO e-Sportsは競技力と発信力を両立するチーム。
-          結果と魅せ方、どっちも取りにいく。
+          競技の最前線で勝ち、配信でファンを熱狂させる。<br>
+          強さとエンタメ性を武器に、常にその先を目指すe-Sportsチーム。
         </p>
 
         <div class="btns">
-          <a class="btn primary" href="#about">MORE</a>
+          <a class="btn primary" href="#concept">MORE</a>
           <a class="btn secondary" href="#contact">CONTACT</a>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
+  <!-- CONCEPT -->
+  <section id="concept">
     <div class="container">
-      <div class="title">ABOUT</div>
+      <div class="section-header">
+        <div class="section-subtitle">CONCEPT</div>
+        <h2 class="section-title">MICOとは</h2>
+      </div>
 
       <div class="grid-3">
-        <div class="card">
-          <h3>COMPETITIVE</h3>
-          <p class="muted">勝つための練習と分析を徹底。</p>
+        <div class="card concept-card">
+          <h3>Vision</h3>
+          <p class="muted">未来のプレイヤーを育てる。</p>
         </div>
-        <div class="card">
-          <h3>STREAMING</h3>
-          <p class="muted">SNS・配信で魅力を広げる。</p>
+        <div class="card concept-card">
+          <h3>Mission</h3>
+          <p class="muted">Fortniteを通じ、挑戦・努力・協力・継続を学べる環境を提供します。</p>
         </div>
-        <div class="card">
-          <h3>COMMUNITY</h3>
-          <p class="muted">応援されるチーム運営。</p>
+        <div class="card concept-card">
+          <h3>Value</h3>
+          <p class="muted">Respect / Growth / Challenge /<br>Teamwork / Enjoy</p>
         </div>
       </div>
     </div>
@@ -254,7 +370,10 @@
   <!-- DIVISIONS -->
   <section id="divisions">
     <div class="container">
-      <div class="title">部門</div>
+      <div class="section-header">
+        <div class="section-subtitle">DIVISIONS</div>
+        <h2 class="section-title">部門</h2>
+      </div>
 
       <div class="grid-3">
         <div class="card">
@@ -276,9 +395,13 @@
   <!-- MEMBERS -->
   <section id="members">
     <div class="container">
-      <div class="title">MEMBER</div>
+      <div class="section-header">
+        <div class="section-subtitle">MEMBER</div>
+        <h2 class="section-title">メンバー</h2>
+      </div>
 
-      <div class="grid-3">
+      <!-- 改善案2: グリッドではなく中央配置(flex-center)に変更 -->
+      <div class="flex-center">
         <div class="card member">
           <img src="image.png" alt="kurosiro" class="avatar-img">
           <div>
@@ -290,19 +413,77 @@
     </div>
   </section>
 
+  <!-- SPONSOR -->
+  <section id="sponsor">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 20px;">
+        <div class="section-subtitle">SPONSOR</div>
+        <h2 class="section-title">スポンサー募集</h2>
+      </div>
+
+      <p class="sponsor-desc">
+        スポンサー様には、広告主ではなく「未来の選手を育てるパートナー」として歩んでいただきたいと考えています。
+      </p>
+
+      <div class="grid-3">
+        <div class="card concept-card">
+          <h3>資金支援の使い道</h3>
+          <!-- 改善案1: リスト内の文字を左揃えにする -->
+          <ul class="sponsor-list">
+            <li>・大会参加費</li>
+            <li>・デザイン・ホームページ制作</li>
+            <li>・イベント運営費</li>
+            <li>・ユニフォーム制作</li>
+          </ul>
+        </div>
+        <div class="card concept-card">
+          <h3>機材支援の使い道</h3>
+          <ul class="sponsor-list">
+            <li>・マウス・キーボード</li>
+            <li>・マイク・ヘッドセット</li>
+            <li>・PC・モニター</li>
+            <li>※育成部門へ貸与します</li>
+          </ul>
+        </div>
+        <div class="card concept-card">
+          <h3>スポンサー特典</h3>
+          <ul class="sponsor-list">
+            <li>・公式X・Discordでのご紹介</li>
+            <li>・ホームページへのロゴ掲載</li>
+            <li>・配信・動画でのご紹介</li>
+            <li>・活動報告の共有</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section id="contact">
-    <div class="container card" style="text-align:center;">
-      <div class="title">CONTACT</div>
-      <p class="muted">スポンサー・コラボ・参加はこちら</p>
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">CONTACT</div>
+        <h2 class="section-title">お問い合わせ</h2>
+      </div>
 
-      <div class="btns" style="justify-content:center;">
-        <a class="btn primary" href="https://x.com/mico_esports" target="_blank" rel="noopener noreferrer">X (@mico_esports)</a>
+      <div class="card" style="text-align:center;">
+        <p class="muted" style="margin-bottom: 20px;">スポンサー・コラボ・参加はこちら</p>
+
+        <div class="btns" style="justify-content:center; margin-top: 0;">
+          <a class="btn primary" href="https://x.com/mico_esports" target="_blank" rel="noopener noreferrer">X (@mico_esports)</a>
+        </div>
       </div>
     </div>
   </section>
 
 </main>
+
+<!-- 改善案3: フッターの追加 -->
+<footer>
+  <div class="container">
+    <p class="muted" style="font-size: 0.85rem;">&copy; 2026 MICO e-Sports. All rights reserved.</p>
+  </div>
+</footer>
 
 </body>
 </html>
