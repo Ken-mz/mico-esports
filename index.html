@@ -91,13 +91,15 @@
     }
 
     .hero-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 0.9fr;
-      gap: 24px;
+      /* 2列分割をやめて、中央寄せのFlexboxに変更 */
+      display: flex;
+      justify-content: center; 
     }
 
     .hero-card {
-      padding: 32px;
+      width: 100%;
+      max-width: 800px; /* PCで横に伸びすぎないように最大幅を設定 */
+      padding: 40px; /* 少し余白を広げてリッチに調整 */
       border-radius: var(--radius);
       background: linear-gradient(180deg, rgba(22,27,34,0.9), rgba(17,21,27,0.95));
       border: 1px solid var(--border-color);
@@ -136,6 +138,8 @@
     .title {
       font-size: 1.8rem;
       margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .grid-3 {
@@ -149,6 +153,11 @@
       border: 1px solid var(--border-color);
       border-radius: var(--radius);
       padding: 20px;
+    }
+    
+    .card h3 {
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     /* ===== Member ===== */
@@ -184,16 +193,15 @@
   <div class="container nav">
     
     <div class="logo">
-      <!-- チームロゴの画像名を logo.png に変更 -->
       <img src="logo.png" alt="MICOロゴ">
       <span>MICO e-Sports</span>
     </div>
 
     <nav class="nav-links">
-      <a href="#about">チーム</a>
+      <a href="#about">ABOUT</a>
       <a href="#divisions">部門</a>
-      <a href="#members">メンバー</a>
-      <a href="#contact">問い合わせ</a>
+      <a href="#members">MEMBER</a>
+      <a href="#contact">CONTACT</a>
     </nav>
   </div>
 </header>
@@ -213,8 +221,8 @@
         </p>
 
         <div class="btns">
-          <a class="btn primary" href="#about">見る</a>
-          <a class="btn secondary" href="#contact">連絡</a>
+          <a class="btn primary" href="#about">MORE</a>
+          <a class="btn secondary" href="#contact">CONTACT</a>
         </div>
       </div>
 
@@ -224,26 +232,26 @@
   <!-- ABOUT -->
   <section id="about">
     <div class="container">
-      <div class="title">チーム</div>
+      <div class="title">ABOUT</div>
 
       <div class="grid-3">
         <div class="card">
-          <h3>競技</h3>
+          <h3>COMPETITIVE</h3>
           <p class="muted">勝つための練習と分析を徹底。</p>
         </div>
         <div class="card">
-          <h3>発信</h3>
+          <h3>STREAMING</h3>
           <p class="muted">SNS・配信で魅力を広げる。</p>
         </div>
         <div class="card">
-          <h3>つながり</h3>
+          <h3>COMMUNITY</h3>
           <p class="muted">応援されるチーム運営。</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- DIVISIONS (部門セクションを新たに追加) -->
+  <!-- DIVISIONS -->
   <section id="divisions">
     <div class="container">
       <div class="title">部門</div>
@@ -268,11 +276,10 @@
   <!-- MEMBERS -->
   <section id="members">
     <div class="container">
-      <div class="title">メンバー</div>
+      <div class="title">MEMBER</div>
 
       <div class="grid-3">
         <div class="card member">
-          <!-- Kurosiroさんのアイコン画像を設定 -->
           <img src="image.png" alt="kurosiro" class="avatar-img">
           <div>
             <b>kurosiro</b>
@@ -286,7 +293,7 @@
   <!-- CONTACT -->
   <section id="contact">
     <div class="container card" style="text-align:center;">
-      <div class="title">お問い合わせ</div>
+      <div class="title">CONTACT</div>
       <p class="muted">スポンサー・コラボ・参加はこちら</p>
 
       <div class="btns" style="justify-content:center;">
