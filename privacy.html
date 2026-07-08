@@ -56,12 +56,34 @@
     .footer-nav a:hover { color: var(--accent-cyan); }
     .copyright { color: var(--text-muted); font-size: 0.8rem; letter-spacing: 1px; }
 
-    @media (max-width: 800px) { .nav-links { justify-content: center; gap: 12px; margin-top: 10px; } .page-title { font-size: 2rem; } .policy-content { padding: 30px 20px; } .footer-nav { gap: 16px; flex-direction: column; } }
-  </style>
-</head>
-<body>
-<div id="loader"><div class="loader-logo">MICO e-Sports</div></div>
+    /* ===== 既存のスマホ用設定の「下」に追加します ===== */
+    @media (max-width: 800px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 2.2rem; }
+      /* ↓ もともとあった .nav-links の設定は消してOKです ↓ */
+      .news-item { flex-direction: column; gap: 8px; align-items: flex-start; }
+    }
 
+    /* ▼▼▼ ここから下を追加 ▼▼▼ */
+    /* 3本バーのスタイル */
+    .menu-toggle { display: none; cursor: pointer; flex-direction: column; gap: 6px; }
+    .menu-toggle span { width: 30px; height: 3px; background: #fff; border-radius: 2px; transition: 0.3s; }
+
+    /* スマホ画面の時のメニューの動き */
+    @media (max-width: 800px) {
+      .menu-toggle { display: flex; }
+      .nav-links {
+        display: none; /* 初期状態では隠す */
+        position: absolute; top: 72px; left: 0; width: 100%;
+        background: rgba(10,12,16,0.95); padding: 20px;
+        flex-direction: column; align-items: center; gap: 20px;
+        border-bottom: 1px solid var(--border-color);
+      }
+      /* ボタンが押されたらメニューを表示する */
+      .nav-links.active { display: flex; } 
+    }
+    /* ▲▲▲ ここまでを追加 ▲▲▲ */
+  </style>
 <header>
   <div class="container nav">
     <div class="logo">
@@ -69,7 +91,12 @@
         <img src="logo.png" alt="MICOロゴ"><span>MICO e-Sports</span>
       </a>
     </div>
-    <nav class="nav-links">
+
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav class="nav-links" id="nav-links">
       <a href="news.html">NEWS</a>
       <a href="about.html">ABOUT</a>
       <a href="divisions.html">DIVISIONS</a>
@@ -158,6 +185,19 @@
   </div>
 </footer>
 
-<script>window.addEventListener('load', function() { setTimeout(function() { document.getElementById('loader').classList.add('loader-hidden'); }, 500); });</script>
+<script>
+  // ローディング画面の処理（もともとあるコード）
+  window.addEventListener('load', function() {
+    setTimeout(function() { document.getElementById('loader').classList.add('loader-hidden'); }, 800); 
+  });
+
+  // ▼▼▼ ここから下を追加 ▼▼▼
+  // 3本バーをクリックした時の処理
+  document.getElementById('menu-toggle').addEventListener('click', function() {
+    document.getElementById('nav-links').classList.toggle('active');
+  });
+  // ▲▲▲ ここまでを追加 ▲▲▲
+</script>
+
 </body>
 </html>

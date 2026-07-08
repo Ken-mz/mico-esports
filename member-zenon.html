@@ -83,12 +83,29 @@
     .muted { color: var(--text-muted); }
 
     /* スマホ対応 */
+    /* ▼▼▼ ここから書き換え ▼▼▼ */
+    /* 3本バーのスタイル */
+    .menu-toggle { display: none; cursor: pointer; flex-direction: column; gap: 6px; }
+    .menu-toggle span { width: 30px; height: 3px; background: #fff; border-radius: 2px; transition: 0.3s; }
+
+    /* スマホ対応 */
     @media (max-width: 800px) {
       .member-hero-inner { flex-direction: column; text-align: center; justify-content: center; }
       .member-info-top h1 { font-size: 3rem; }
       .profile-grid { grid-template-columns: 1fr; gap: 40px; }
-      .nav-links { justify-content: center; gap: 12px; margin-top: 10px; }
+      
+      /* スマホメニューの動き */
+      .menu-toggle { display: flex; }
+      .nav-links {
+        display: none; /* 初期状態では隠す */
+        position: absolute; top: 72px; left: 0; width: 100%;
+        background: rgba(10,12,16,0.95); padding: 20px;
+        flex-direction: column; align-items: center; gap: 20px;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .nav-links.active { display: flex; }
     }
+    /* ▲▲▲ ここまで書き換え ▲▲▲ */
   </style>
 </head>
 <body>
@@ -101,11 +118,16 @@
         <img src="logo.png" alt="MICOロゴ"><span>MICO e-Sports</span>
       </a>
     </div>
-    <nav class="nav-links">
+
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav class="nav-links" id="nav-links">
       <a href="news.html">NEWS</a>
       <a href="about.html">ABOUT</a>
       <a href="divisions.html">DIVISIONS</a>
-      <a href="members.html" style="color: #fff;">MEMBERS</a>
+      <a href="members.html">MEMBERS</a>
       <a href="sponsor.html">SPONSOR</a>
       <a href="contact.html">CONTACT</a>
     </nav>
@@ -165,6 +187,19 @@
     <p class="copyright" style="color: var(--text-muted); font-size: 0.8rem; letter-spacing: 1px;">&copy; 2026 MICO e-Sports. All rights reserved.</p>
   </div>
 </footer>
-<script>window.addEventListener('load', function() { setTimeout(function() { document.getElementById('loader').classList.add('loader-hidden'); }, 400); });</script>
+<script>
+  // ローディング画面の処理（もともとあるコード）
+  window.addEventListener('load', function() {
+    setTimeout(function() { document.getElementById('loader').classList.add('loader-hidden'); }, 800); 
+  });
+
+  // ▼▼▼ ここから下を追加 ▼▼▼
+  // 3本バーをクリックした時の処理
+  document.getElementById('menu-toggle').addEventListener('click', function() {
+    document.getElementById('nav-links').classList.toggle('active');
+  });
+  // ▲▲▲ ここまでを追加 ▲▲▲
+</script>
+
 </body>
 </html>
